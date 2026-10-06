@@ -28,6 +28,7 @@ import StellarOrderWatch from "../../components/StellarOrderWatch";
 import { recordBuyerOrder } from "../../lib/buyer-orders";
 import type { PayResult } from "../../lib/stellar/checkout";
 import { SUPPORTED_TOKENS, defaultToken, TokenConfig, NETWORK } from "../../lib/stellar/config";
+import { generateOrderId } from "../../lib/stellar/orders";
 import { resolveXlmUsdRate, TESTNET_REFERENCE_XLM_USD_PRICE } from "../../lib/stellar/price";
 import {
   validateOTP,
@@ -122,7 +123,7 @@ const Checkout = () => {
     subject: "YOUR ORDER CONFIRMATION",
   });
 
-  const [orderId] = useState(() => `SS-${Date.now()}-${Math.floor(Math.random() * 1e6)}`);
+  const [orderId] = useState(() => generateOrderId());
 
   const handleStellarSuccess = async (result: PayResult) => {
     const symbol = result.tokenSymbol || selectedToken.symbol;
